@@ -5,12 +5,15 @@ import Navbar from '../pages/Shared/Navbar';
 
 const RootLayout = () => {
  return (
-    <div className="bg-[#EAECED]">
-      <div className="">
-        <div className="sticky top-0 z-50 bg-white shadow-md">
+    <div >
+      <div >
+        <div className="sticky-navbar ">
           <Navbar></Navbar>
         </div>
-        <Outlet></Outlet>
+        <div className="outlet-color" >
+ <Outlet></Outlet>
+        </div>
+       
         <Footer></Footer>
       </div>
     </div>

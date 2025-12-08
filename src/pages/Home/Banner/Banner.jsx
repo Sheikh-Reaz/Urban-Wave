@@ -7,6 +7,8 @@ import banner_1_element from "../../../assets/banner-1-element.png";
 import banner_1_text from "../../../assets/banner-text.png";
 import banner_1_background from "../../../assets/background.jpg";
 import { NavLink } from "react-router";
+import ButtonAnimation from "../../../components/ButtonAnimation";
+import ButtonAnimation2 from "../../../components/ButtonAnimation2";
 
 const slides = [
   {
@@ -79,6 +81,7 @@ const Banner = () => {
 
   return (
     <div className="relative w-full min-h-[500px] md:min-h-[700px] overflow-hidden">
+      {/* Slides */}
       <AnimatePresence mode="wait">
         {slides.map((slide, idx) =>
           idx === current ? (
@@ -153,21 +156,27 @@ const Banner = () => {
 
       {/* CTA Button */}
       <div className="absolute bottom-4 md:bottom-10 left-4 md:left-10 z-10">
-        <NavLink to="">
-          <button className="btn btn-primary">Order Now</button>
-        </NavLink>
+        {slides[current].id === 1 ? (
+          <ButtonAnimation2 width={220} height={70} speed={3} stroke="#111827">
+            Shop Now
+          </ButtonAnimation2>
+        ) : (
+          <ButtonAnimation width={220} height={70} speed={3} stroke="#111827">
+            Shop Now
+          </ButtonAnimation>
+        )}
       </div>
 
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-4 -translate-y-1/2 z-10  bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition"
+        className="absolute top-1/2 left-4 -translate-y-1/2 z-10 bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition"
       >
         &#10094;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-4 -translate-y-1/2 z-10 bbg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition"
+        className="absolute top-1/2 right-4 -translate-y-1/2 z-10 bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition"
       >
         &#10095;
       </button>

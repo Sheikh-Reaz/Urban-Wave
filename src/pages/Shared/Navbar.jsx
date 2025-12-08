@@ -3,54 +3,88 @@ import { useTheme } from "../../contexts/ThemeContext/ThemeContext";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../../components/Logo";
 import ThemeToggle from "../../components/ThemeToggle";
-import AnimatedNavLink from "../../components/AnimatedNavlink";
-
-
-
+import "./Navbar.css"; // Import your CSS file
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   const handleLogOut = () => {
-    logOut()
-      .then()
-      .catch((error) => console.log(error));
+    logOut().catch((error) => console.log(error));
   };
 
   const links = (
     <>
       <li>
-        <AnimatedNavLink to="/">Home</AnimatedNavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+          }
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <AnimatedNavLink to="/all-products">All Products</AnimatedNavLink>
+        <NavLink
+          to="/all-products"
+          className={({ isActive }) =>
+            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+          }
+        >
+          All Product
+        </NavLink>
       </li>
       <li>
-        <AnimatedNavLink to="/about-us">About Us</AnimatedNavLink>
+        <NavLink
+          to="/about-us"
+          className={({ isActive }) =>
+            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+          }
+        >
+          About Us
+        </NavLink>
       </li>
       {user && (
         <>
           <li>
-            <AnimatedNavLink to="/dashboard/my-parcels">
+            <NavLink
+              to="/dashboard/my-parcels"
+              className={({ isActive }) =>
+                `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+              }
+            >
               My Parcels
-            </AnimatedNavLink>
+            </NavLink>
           </li>
           <li>
-            <AnimatedNavLink to="/dashboard">Dashboard</AnimatedNavLink>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+              }
+            >
+              Dashboard
+            </NavLink>
           </li>
         </>
       )}
       <li>
-        <AnimatedNavLink to="/about">About</AnimatedNavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+          }
+        >
+        Contact
+        </NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="navbar px-10  bg-base-100  shadow-sm">
-
-        <div className="navbar-start">
+    <div className="navbar   px-10 shadow-sm">
+      <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -70,7 +104,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content background-color rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {links}
           </ul>
@@ -81,7 +115,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal px-1 gap-navlink">{links}</ul>
       </div>
 
       <div className="navbar-end">
@@ -94,7 +128,7 @@ const Navbar = () => {
             Log Out
           </button>
         ) : (
-          <Link className="btn square-nav-normal " to="/login">
+          <Link className="btn square-nav-normal" to="/login">
             Log in
           </Link>
         )}
@@ -103,9 +137,7 @@ const Navbar = () => {
           Register
         </Link>
       </div>
-
-</div>
-  
+    </div>
   );
 };
 

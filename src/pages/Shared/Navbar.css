@@ -1,0 +1,38 @@
+/* Base navlink style */
+.navlink {
+  position: relative;
+  padding: 5px 0;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+  font-family: "Helvetica Compressed", sans-serif; /* fallback in case class missing */
+}
+
+/* Gap between navlinks */
+.gap-navlink li {
+  margin-right: 20px; /* adjust spacing here */
+}
+
+/* Underline animation for hover & active */
+.navlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+/* Hover animation */
+.navlink:hover::after {
+  width: 100%;
+}
+
+/* Active navlink underline animation */
+.navlink.active::after {
+  width: 100%;
+}
+
+
