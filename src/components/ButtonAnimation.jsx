@@ -9,8 +9,15 @@ const ButtonAnimation = ({
   height = 60,
   gapSize = 20,
   children,
+
+  // ✅ NEW PROPS FOR REUSABILITY
+  as = "button",     // button | a | Link | div
+  type = "button",  // submit | button
+  href,
+  ...rest
 }) => {
   const controls = useAnimation();
+  const Component = motion[as] || motion.button;
 
   const w = width - 2;
   const h = height - 2;
@@ -35,12 +42,15 @@ const ButtonAnimation = ({
   const moveDistance = 3;
 
   return (
-    <motion.div
-      style={{ width, height }}
-      className={`relative inline-block ${className}`}
+    <Component
+      type={as === "button" ? type : undefined}
+      href={as === "a" ? href : undefined}
       onClick={onClick}
+      style={{ width, height }}
+      className={`relative inline-block cursor-pointer select-none ${className}`}
       initial="rest"
       whileHover="hover"
+      {...rest}
     >
       {/* Shadow layer */}
       <motion.div
@@ -54,11 +64,15 @@ const ButtonAnimation = ({
 
       {/* Main button */}
       <motion.div
-        className="relative flex items-center justify-center overflow-hidden cursor-pointer"
+        className="relative flex items-center justify-center overflow-hidden"
         style={{ width, height }}
         variants={{
           rest: { x: 0, y: 0 },
-          hover: { x: moveDistance, y: moveDistance, transition: { type: "spring", stiffness: 300, damping: 20 } },
+          hover: {
+            x: moveDistance,
+            y: moveDistance,
+            transition: { type: "spring", stiffness: 300, damping: 20 },
+          },
         }}
       >
         {/* White background layer */}
@@ -87,20 +101,20 @@ const ButtonAnimation = ({
             strokeWidth="2.2"
             strokeDasharray={dashArray}
             initial={{ strokeDashoffset: initialOffset }}
-            animate={controls} // stroke animation always running
+            animate={controls}
             style={{ vectorEffect: "non-scaling-stroke" }}
           />
         </svg>
 
         {/* Button content */}
         <motion.div
-          className="relative z-10 font-medium"
+          className="relative z-10 font-medium pointer-events-none"
           style={{ color: "#000" }}
         >
           {children}
         </motion.div>
       </motion.div>
-    </motion.div>
+    </Component>
   );
 };
 

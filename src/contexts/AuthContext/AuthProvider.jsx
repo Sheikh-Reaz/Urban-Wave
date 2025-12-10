@@ -11,19 +11,41 @@ const AuthProvider = ({children}) => {
 
     const googleProvider = new GoogleAuthProvider()
 
-    const registerUser = (email,password) =>{
-        setLoading(true)
-        return createUserWithEmailAndPassword(auth,email,password)
+const registerUser = async (email, password) => {
+    setLoading(true);
+    try {
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        setLoading(false); // ✅ stop loading on success
+        return result;
+    } catch (err) {
+        setLoading(false); // ✅ stop loading on error
+        throw err; // rethrow so Register page can handle toast
     }
-    const signInUser = (email,password) => {
-        setLoading(true)
-        return signInWithEmailAndPassword(auth,email,password)
+};
+const signInUser = async (email, password) => {
+    setLoading(true);
+    try {
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        setLoading(false); // ✅ stop loading on success
+        return result;
+    } catch (err) {
+        setLoading(false); // ✅ stop loading on error
+        throw err; // rethrow so Login component can handle toast
     }
+};
     
-    const signInGoogle = () => {
-        setLoading(true)
-        return signInWithPopup(auth,googleProvider)
+const signInGoogle = async () => {
+    setLoading(true);
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        setLoading(false);
+        return result;
+    } catch (err) {
+        setLoading(false);
+        throw err;
     }
+};
+   
 
     const logOut = () =>{
         setLoading(true);

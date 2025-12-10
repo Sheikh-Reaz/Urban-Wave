@@ -30,7 +30,7 @@ const Home = () => {
           minHeight: "500px",
           transition: "background 0.4s ease",
 
-          // ✅ Bottom space after Reviews
+         
           paddingBottom: "120px",
         }}
       >
@@ -42,21 +42,6 @@ const Home = () => {
               New Arrivals
             </h1>
 
-            <div className="flex justify-center mt-4">
-              <svg
-                width="140"
-                height="10"
-                viewBox="0 0 150 10"
-                fill="red"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M.9 2.3C1 2.1.7 2 .6 1.8c-.2.1-.3.2-.5.3..."
-                ></path>
-              </svg>
-            </div>
 
             <ProductCard />
           </div>
