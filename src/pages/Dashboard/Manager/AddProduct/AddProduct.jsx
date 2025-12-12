@@ -104,6 +104,11 @@ const AddProduct = () => {
       </div>
 
       {loading && <Loading />}
+      {loading && <Loading />}
+      {loading && <Loading />}
+      {loading && <Loading />}
+      {loading && <Loading />}
+      {loading && <Loading />}
 
       <div className="grid grid-cols-1 md:grid-cols-2">
         {/* Form */}
