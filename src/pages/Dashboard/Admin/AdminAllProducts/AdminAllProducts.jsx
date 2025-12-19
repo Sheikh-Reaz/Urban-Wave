@@ -1,20 +1,33 @@
-import React from "react";
-import useAuth from "../../../../hooks/useAuth";
+// import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../../hooks/useAuth";
 
-const ManageProduct = () => {
-  const { user } = useAuth();
+const AdminAllProducts = () => {
   const axiosSecure = useAxiosSecure();
+  //   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const { user } = useAuth();
+  //   useEffect(() => {
+  //     const fetchProducts = async () => {
+  //       try {
+  //         const res = await axiosSecure.get("/products");
+  //         setProducts(res.data);
+  //       } catch (error) {
+  //         console.error("Failed to fetch products:", error);
+  //       }
+  //     };
 
-  const { data: myProducts = [], refetch } = useQuery({
-    queryKey: ["myProducts", user?.email],
+  //     fetchProducts();
+  //   }, [axiosSecure]);
+
+  const { data: products = [], refetch } = useQuery({
+    queryKey: ["products", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-products?email=${user.email}`);
+      const res = await axiosSecure.get("/products");
       return res.data;
     },
   });
@@ -40,13 +53,25 @@ const ManageProduct = () => {
           res.data.message === "Product deleted successfully"
         ) {
           Swal.fire("Deleted!", "Your product has been deleted.", "success");
-          refetch(); // refresh product list
+          // refresh product list
+          refetch();
         }
       }
     });
   };
+  const handleShowOnHomeToggle = async (productId, currentValue) => {
+    try {
+      const res = await axiosSecure.patch(`/update-product/${productId}`, {
+        showOnHome: !currentValue,
+      });
 
-
+      if (res.data.success) {
+        refetch();
+      }
+    } catch (error) {
+      console.error("Failed to update showOnHome:", error);
+    }
+  };
 
   return (
     <div>
@@ -61,12 +86,14 @@ const ManageProduct = () => {
               <th>Product Image</th>
               <th>Product Title</th>
               <th>Price</th>
-              <th>Payment Mode</th>
+              <th>Category</th>
+              <th>Created By</th>
+              <th>Show On Home</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {myProducts.map((product, i) => (
+            {products.map((product, i) => (
               <tr key={product.productId}>
                 <td>{i + 1}.</td>
                 <td>
@@ -83,8 +110,25 @@ const ManageProduct = () => {
                 </td>
                 <td>{product.price}</td>
                 <td>
-                  <p>{product.paymentOption}</p>
+                  <p>{product.category}</p>
                 </td>
+                <td>
+                  <p>{product.sellerEmail}</p>
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-error"
+                    checked={product.showOnHome === true}
+                    onChange={() =>
+                      handleShowOnHomeToggle(
+                        product.productId,
+                        product.showOnHome
+                      )
+                    }
+                  />
+                </td>
+
                 <td>
                   <button
                     onClick={() =>
@@ -112,14 +156,15 @@ const ManageProduct = () => {
               <th>Title</th>
               <th>Price</th>
               <th>Payment Mode</th>
+              <th>Created By</th>
+              <th>Show On Home</th>
               <th>Actions</th>
             </tr>
           </tfoot>
         </table>
       </div>
-
     </div>
   );
 };
 
-export default ManageProduct;
+export default AdminAllProducts;

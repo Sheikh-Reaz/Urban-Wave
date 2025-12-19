@@ -7,6 +7,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Loading from "../../../../components/Loading";
 import ButtonAnimation from "../../../../components/ButtonAnimation";
 import ImageDropBox from "../../../../components/ImageDropBox";
+import useRole from "../../../../hooks/useRole";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
@@ -21,6 +22,12 @@ const UpdateProduct = () => {
     box3: null,
     box4: null,
   });
+
+const role = useRole();
+const userRole = role.role
+
+
+ 
 
   const {
     register,
@@ -72,7 +79,9 @@ const UpdateProduct = () => {
     formData.append("image", imageFile);
 
     const res = await fetch(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Host_Key}`,
+      `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_Image_Host_Key
+      }`,
       { method: "POST", body: formData }
     );
     const data = await res.json();
@@ -119,6 +128,13 @@ const UpdateProduct = () => {
       setLoading(false);
     }
   };
+  const handleNavigate = () =>{
+    if(userRole==="manager"){
+      navigate("/dashboard/manage-products")
+    }else{
+      navigate("/dashboard/all-products")
+    }
+  }
 
   if (loading) return <Loading />;
 
@@ -126,7 +142,7 @@ const UpdateProduct = () => {
     <div className="p-4">
       {/* Back button */}
       <button
-        onClick={() => navigate("/dashboard/manage-products")}
+        onClick={() => handleNavigate() }
         className="btn mb-4"
       >
         ← Back to Manage Products
@@ -202,7 +218,9 @@ const UpdateProduct = () => {
 
                 {/* Minimum Order Quantity */}
                 <div>
-                  <label className="label form-label">Minimum Order Quantity</label>
+                  <label className="label form-label">
+                    Minimum Order Quantity
+                  </label>
                   <input
                     type="number"
                     {...register("minOrderQuantity", { required: true })}

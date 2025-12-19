@@ -112,7 +112,7 @@ const handleRegistration = async (data) => {
         </h1>
       </div>
 
-      <div className="max-w-md mx-auto my-12 border border-gray-300 bg-white">
+      <div className="max-w-md mx-auto my-12 border border-gray-300">
         <form className="card-body" onSubmit={handleSubmit(handleRegistration)}>
           <fieldset className="fieldset">
             {/* Name */}

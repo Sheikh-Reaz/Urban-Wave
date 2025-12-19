@@ -73,23 +73,27 @@ body {
   background-color: #181818; /* dark background */
 }
 
+/* Navbar.css */
+.mobile-dropdown-bg {
+  background-color: var(--dropdown-bg);
+}
+[data-theme="light"] .mobile-dropdown-bg {
+  --dropdown-bg: rgb(255, 255, 255);
+}
+[data-theme="dark"] .mobile-dropdown-bg {
+  --dropdown-bg: #181818;
+}
+[data-theme="light"] .border-color {
+  border-color: black;
+}
 
+[data-theme="dark"] .border-color {
+  border-color: white;
+}
 
-/* Default navbar link style */
-/* .nav-link {
-  font-size: 20px;
-  font-family: "HelveticaCompressed";
-  transition: 0.2s ease-in-out;
-} */
-
-/* Active link style (Figma: Lime background, bold, dark text) */
-/* .nav-active {
-  font-size: 20px;
-  font-family: "HelveticaCompressed";
-} */
-/* Example: renamed to .my-list-gap */
 .square-nav {
   font-family: "HelveticaCompressed";
+  font-weight: 300;
   font-size: 18px;
   color: black;
   background: transparent; /* No background */
@@ -99,7 +103,7 @@ body {
   cursor: pointer;
 }
 .square-nav-normal {
-  
+  font-family: "HelveticaCompressed";  /* Add this line */
   font-size: 18px;
   color: black;
   background: transparent; /* No background */
@@ -132,4 +136,11 @@ body {
 .input-field:focus {
   outline: none;
 }
+
+.tooltip[data-tip]::after {
+  transition-delay: 1s !important; /* make tooltips appear instantly */
+}
+
+
+
     

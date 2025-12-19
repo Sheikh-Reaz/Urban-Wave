@@ -19,7 +19,7 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+            `navlink  text-color ${isActive ? "active" : ""}`
           }
         >
           Home
@@ -29,7 +29,7 @@ const Navbar = () => {
         <NavLink
           to="/all-products"
           className={({ isActive }) =>
-            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+            `navlink  text-color ${isActive ? "active" : ""}`
           }
         >
           All Product
@@ -39,7 +39,7 @@ const Navbar = () => {
         <NavLink
           to="/about-us"
           className={({ isActive }) =>
-            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+            `navlink text-color ${isActive ? "active" : ""}`
           }
         >
           About Us
@@ -47,21 +47,12 @@ const Navbar = () => {
       </li>
       {user && (
         <>
-          <li>
-            <NavLink
-              to="/dashboard/my-parcels"
-              className={({ isActive }) =>
-                `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
-              }
-            >
-              My Parcels
-            </NavLink>
-          </li>
+ 
           <li>
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+                `navlink  text-color ${isActive ? "active" : ""}`
               }
             >
               Dashboard
@@ -73,7 +64,7 @@ const Navbar = () => {
         <NavLink
           to="/contact"
           className={({ isActive }) =>
-            `navlink helvetica-compressed text-color ${isActive ? "active" : ""}`
+            `navlink  text-color ${isActive ? "active" : ""}`
           }
         >
         Contact
@@ -104,7 +95,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content background-color rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content mobile-dropdown-bg rounded-box z-1 mt-3 w-52 p-2 "
           >
             {links}
           </ul>
@@ -114,8 +105,8 @@ const Navbar = () => {
         </span>
       </div>
 
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-navlink">{links}</ul>
+      <div className="navbar-center   hidden lg:flex">
+        <ul className=" menu-horizontal   px-1 gap-navlink">{links}</ul>
       </div>
 
       <div className="navbar-end">
@@ -123,24 +114,29 @@ const Navbar = () => {
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
-        {user ? (
-          <button onClick={handleLogOut} className="btn square-nav-normal ">
-            Log Out
-          </button>
-        ) : (
-            <>
-                      <Link className="btn square-nav-normal" to="/login">
-            Log in
-          </Link>
-                  <Link className="btn square-nav-normal mx-1 " to="/register">
-          Register
-        </Link>
-            </>
-        )
-        
-        }
-
-
+{user ? (
+  <button 
+    onClick={handleLogOut} 
+    className="px-3 py-1.5 md:px-4 md:py-2 bg-transparent text-color border-2 border-color rounded-none transition-colors helvetica-compressed text-base md:text-lg tracking-wider antialiased cursor-pointer"
+  >
+    Log Out
+  </button>
+) : (
+    <>
+      <Link 
+        className="px-3 py-1.5 md:px-4 md:py-2 bg-transparent text-color border-2 border-color rounded-none transition-colors helvetica-compressed text-base md:text-lg tracking-wider antialiased inline-block" 
+        to="/login"
+      >
+        Log in
+      </Link>
+      <Link 
+        className="px-3 py-1.5 md:px-4 md:py-2 bg-transparent text-color border-2 border-color rounded-none transition-colors helvetica-compressed text-base md:text-lg tracking-wider mx-1 antialiased inline-block" 
+        to="/register"
+      >
+        Register
+      </Link>
+    </>
+)}
       </div>
     </div>
   );

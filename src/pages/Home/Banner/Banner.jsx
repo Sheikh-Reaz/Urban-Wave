@@ -6,10 +6,10 @@ import banner_1_human from "../../../assets/banner-1-human.png";
 import banner_1_element from "../../../assets/banner-1-element.png";
 import banner_1_text from "../../../assets/banner-text.png";
 import banner_1_background from "../../../assets/background.jpg";
-import { NavLink } from "react-router";
-import ButtonAnimation from "../../../components/ButtonAnimation";
+
 import ButtonAnimation2 from "../../../components/ButtonAnimation2";
 
+/* ---------------- SLIDES ---------------- */
 const slides = [
   {
     id: 1,
@@ -21,7 +21,8 @@ const slides = [
     id: 2,
     type: "text-with-image",
     background: bannerImage3,
-    text: "Discover our amazing features and enjoy the seamless experience we provide. Join us now!",
+    text:
+      "Discover our amazing features and enjoy the seamless experience we provide. Join us now!",
   },
   {
     id: 3,
@@ -31,152 +32,178 @@ const slides = [
   },
 ];
 
+/* ---------------- MOSAIC SETTINGS ---------------- */
+const ROWS = 4;
+const COLS = 9;
+
+/* ---------------- TILE VARIANTS ---------------- */
+const tileVariants = {
+  initial: {
+    opacity: 0,
+    scale: 0.6,
+  },
+  animate: (i) => ({
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delay: i * 0.02,
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  }),
+  exit: (i) => ({
+    opacity: 0,
+    scale: 1.4,
+    transition: {
+      delay: i * 0.01,
+      duration: 0.25,
+      ease: "easeIn",
+    },
+  }),
+};
+
 const Banner = () => {
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // Slide interval
+  /* -------- AUTOPLAY WITH PAUSE -------- */
   useEffect(() => {
+    if (isPaused) return;
+
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 5000); // 5s delay between slides
+    }, 5000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [isPaused, slides.length]);
 
-  // Variants for slide animation
-  const slideVariants = {
-    enter: { opacity: 0, x: 50, scale: 1.05 },
-    center: {
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: { type: "spring", stiffness: 100, damping: 20 },
-    },
-    exit: {
-      opacity: 0,
-      x: -50,
-      scale: 0.95,
-      transition: { type: "spring", stiffness: 100, damping: 20 },
-    },
+  const prevSlide = () =>
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+
+  const nextSlide = () =>
+    setCurrent((prev) => (prev + 1) % slides.length);
+
+  /* -------- TILE RENDER -------- */
+  const renderTiles = (slide) => {
+    const tiles = [];
+
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        const index = row * COLS + col;
+
+        tiles.push(
+          <motion.div
+            key={index}
+            custom={index}
+            variants={tileVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="absolute"
+            style={{
+              width: `${100 / COLS}%`,
+              height: `${100 / ROWS}%`,
+              top: `${(100 / ROWS) * row}%`,
+              left: `${(100 / COLS) * col}%`,
+              backgroundImage:
+                slide.type === "image"
+                  ? `url(${slide.image})`
+                  : `url(${slide.background})`,
+              backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
+              backgroundPosition: `${(col / (COLS - 1)) * 100}% ${
+                (row / (ROWS - 1)) * 100
+              }%`,
+            }}
+          />
+        );
+      }
+    }
+
+    return tiles;
   };
-
-  // Variants for layered elements
-  const layerVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.15, duration: 0.4, ease: "easeOut" },
-    }),
-  };
-
-  // Variants for text slide
-  const textVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 120, damping: 18 } },
-  };
-
-  // Arrow navigation
-  const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
 
   return (
-    <div className="relative w-full min-h-[500px] md:min-h-[700px] overflow-hidden">
-      {/* Slides */}
+    <div
+      className="relative w-full min-h-[500px] md:min-h-[700px] overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* SLIDES */}
       <AnimatePresence mode="wait">
-        {slides.map((slide, idx) =>
-          idx === current ? (
-            <motion.div
-              key={slide.id}
-              className="absolute inset-0 w-full h-full flex justify-center items-center"
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
-              {/* Layered Slide */}
-              {slide.type === "layered" && (
-                <div
-                  className="relative w-full h-full flex justify-center items-center"
-                  style={{
-                    backgroundImage: `url(${slide.background})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  {slide.layers.map((layer, i) => (
-                    <motion.img
-                      key={i}
-                      src={layer}
-                      alt=""
-                      custom={i}
-                      variants={layerVariants}
-                      initial="hidden"
-                      animate="visible"
-                      className={`absolute w-auto max-w-full h-auto ${
-                        layer === banner_1_text ? "left-10" : ""
-                      }`}
-                    />
-                  ))}
-                </div>
-              )}
+        <motion.div
+          key={slides[current].id}
+          className="absolute inset-0 w-full h-full"
+        >
+          {/* MOSAIC BACKGROUND */}
+          {renderTiles(slides[current])}
 
-              {/* Text with Image Slide */}
-              {slide.type === "text-with-image" && (
-                <div
-                  className="relative w-full h-full flex items-center justify-start px-10"
-                  style={{
-                    backgroundImage: `url(${slide.background})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  <motion.p
-                    className="text-black text-xl md:text-5xl font-bold max-w-xl"
-                    variants={textVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    {slide.text}
-                  </motion.p>
-                </div>
-              )}
+          {/* CONTENT OVERLAY */}
+          <div className="relative z-10 w-full h-full">
+            {/* Layered Slide */}
+            {slides[current].type === "layered" && (
+              <div className="relative w-full h-full flex justify-center items-center">
+                {slides[current].layers.map((layer, i) => (
+                  <motion.img
+                    key={i}
+                    src={layer}
+                    alt=""
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: { delay: i * 0.2 },
+                    }}
+                    className={`absolute ${
+                      layer === banner_1_text ? "left-10" : ""
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
 
-              {/* Image Slide */}
-              {slide.type === "image" && (
-                <img
-                  src={slide.image}
-                  alt=""
-                  className="w-full object-cover h-[500px] md:h-[700px]"
-                />
-              )}
-            </motion.div>
-          ) : null
-        )}
+            {/* Text Slide */}
+            {slides[current].type === "text-with-image" && (
+              <div className="flex items-center h-full px-10">
+                <motion.p
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ type: "spring", stiffness: 120 }}
+                  className="text-black text-xl md:text-5xl font-bold max-w-xl"
+                >
+                  {slides[current].text}
+                </motion.p>
+              </div>
+            )}
+          </div>
+        </motion.div>
       </AnimatePresence>
 
-      {/* CTA Button */}
-      <div className="absolute bottom-4 md:bottom-10 left-4 md:left-10 z-10">
-        {slides[current].id === 1 ? (
+      {/* CTA BUTTON */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`cta-${current}`}
+          initial={{ x: -80, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 80, opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="absolute bottom-4 md:bottom-10 left-4 md:left-10 z-20"
+        >
           <ButtonAnimation2 width={220} height={70} speed={3} stroke="#111827">
             Shop Now
           </ButtonAnimation2>
-        ) : (
-          <ButtonAnimation width={220} height={70} speed={3} stroke="#111827">
-            Shop Now
-          </ButtonAnimation>
-        )}
-      </div>
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Navigation Arrows */}
+      {/* NAV ARROWS */}
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-4 -translate-y-1/2 z-10 bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition"
+        className="absolute top-1/2 left-4 -translate-y-1/2 z-20 text-white p-3"
       >
         &#10094;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-4 -translate-y-1/2 z-10 bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition"
+        className="absolute top-1/2 right-4 -translate-y-1/2 z-20 text-white p-3"
       >
         &#10095;
       </button>

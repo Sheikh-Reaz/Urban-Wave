@@ -6,8 +6,11 @@ import ImageDropBox from "../../../../components/ImageDropBox";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import Loading from "../../../../components/Loading";
+import useRole from "../../../../hooks/useRole";
 
 const AddProduct = () => {
+  const role = useRole();
+
   const {
     register,
     handleSubmit,
@@ -18,7 +21,6 @@ const AddProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  // ✅ State for images from ImageDropBox
   const [productImages, setProductImages] = useState({
     box1: null,
     box2: null,
@@ -26,10 +28,9 @@ const AddProduct = () => {
     box4: null,
   });
 
-  // ✅ Loading state
   const [loading, setLoading] = useState(false);
+  const [showSuspendModal, setShowSuspendModal] = useState(false);
 
-  // ✅ Upload a single image to imgbb
   const uploadImageToImgBB = async (imageFile) => {
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -45,18 +46,21 @@ const AddProduct = () => {
     return data.data.display_url;
   };
 
-  // ✅ Form submit handler
   const handleAddProduct = async (data) => {
-    // Validate main image
+    // 🚫 Suspended check
+    if (role?.status === "suspended") {
+      setShowSuspendModal(true);
+      return;
+    }
+
     if (!productImages.box1) {
       Swal.fire("Error", "Please upload the main product image", "error");
       return;
     }
 
-    setLoading(true); // show loading
+    setLoading(true);
 
     try {
-      // Upload images
       const productImg = await uploadImageToImgBB(productImages.box1);
       const productImg_2 = productImages.box2
         ? await uploadImageToImgBB(productImages.box2)
@@ -68,7 +72,6 @@ const AddProduct = () => {
         ? await uploadImageToImgBB(productImages.box4)
         : "";
 
-      // Merge form data + image URLs
       const productData = {
         ...data,
         productImg,
@@ -76,15 +79,13 @@ const AddProduct = () => {
         productImg_3,
         productImg_4,
         createdAt: new Date(),
-        email: user.email,
+        sellerEmail: user.email,
       };
 
-      // Send to backend
       await axiosSecure.post("/add-product", productData);
 
       Swal.fire("Success", "Product added successfully!", "success");
 
-      // Reset form and images
       reset();
       setProductImages({ box1: null, box2: null, box3: null, box4: null });
     } catch (err) {
@@ -96,31 +97,23 @@ const AddProduct = () => {
   };
 
   return (
-    <div>
+    <>
+      {loading && <Loading />}
+
       <div>
         <h1 className="title-font text-bold text-xl md:text-4xl text-center">
           Add Product page
         </h1>
       </div>
 
-      {loading && <Loading />}
-      {loading && <Loading />}
-      {loading && <Loading />}
-      {loading && <Loading />}
-      {loading && <Loading />}
-      {loading && <Loading />}
-
       <div className="grid grid-cols-1 md:grid-cols-2">
-        {/* Form */}
         <div className="my-12 border border-gray-300 bg-white">
           <form
             className="card-body w-full"
             onSubmit={handleSubmit(handleAddProduct)}
           >
             <fieldset className="fieldset">
-              {/* 2 Column Grid Wrapper */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Product Title */}
                 <div>
                   <label className="label form-label">Product Title</label>
                   <input
@@ -134,7 +127,6 @@ const AddProduct = () => {
                   )}
                 </div>
 
-                {/* Category */}
                 <div>
                   <label className="label form-label">Category</label>
                   <select
@@ -152,7 +144,6 @@ const AddProduct = () => {
                   )}
                 </div>
 
-                {/* Price */}
                 <div>
                   <label className="label form-label">Price</label>
                   <input
@@ -166,7 +157,6 @@ const AddProduct = () => {
                   )}
                 </div>
 
-                {/* Available Quantity */}
                 <div>
                   <label className="label form-label">Available Quantity</label>
                   <input
@@ -182,7 +172,6 @@ const AddProduct = () => {
                   )}
                 </div>
 
-                {/* Minimum Order Quantity */}
                 <div>
                   <label className="label form-label">
                     Minimum Order Quantity
@@ -200,7 +189,6 @@ const AddProduct = () => {
                   )}
                 </div>
 
-                {/* Payment Option */}
                 <div>
                   <label className="label form-label">Payment Option</label>
                   <select
@@ -216,7 +204,6 @@ const AddProduct = () => {
                   )}
                 </div>
 
-                {/* Demo Video Link */}
                 <div>
                   <label className="label form-label">
                     Demo Video Link (Optional)
@@ -229,7 +216,6 @@ const AddProduct = () => {
                   />
                 </div>
 
-                {/* Show on Home Page */}
                 <div className="flex items-center gap-2 mt-8">
                   <input
                     type="checkbox"
@@ -240,7 +226,6 @@ const AddProduct = () => {
                 </div>
               </div>
 
-              {/* Full Width Fields */}
               <div className="mt-4">
                 <label className="label form-label">Product Description</label>
                 <textarea
@@ -270,7 +255,6 @@ const AddProduct = () => {
           </form>
         </div>
 
-        {/* Image Upload Section */}
         <div>
           <ImageDropBox
             productImages={productImages}
@@ -278,7 +262,27 @@ const AddProduct = () => {
           />
         </div>
       </div>
-    </div>
+
+      {/* ----------- SUSPENDED MODAL ----------- */}
+      {showSuspendModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white p-6 rounded-md max-w-sm w-full text-center">
+            <h2 className="text-xl font-semibold mb-3">Action Restricted</h2>
+            <p className="text-gray-700 mb-6">
+              Sorry you cannot place order. You have been suspended.
+              <br />
+              Please contact authority.
+            </p>
+            <button
+              onClick={() => setShowSuspendModal(false)}
+              className="btn"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

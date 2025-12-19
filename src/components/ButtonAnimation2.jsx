@@ -34,6 +34,12 @@ const ButtonAnimation2 = ({
 
   const moveDistance = 3;
 
+  // Text color variants
+  const textVariants = {
+    rest: { color: "#ffffff" }, // default white
+    hover: { color: "#000000", transition: { duration: 0.3 } }, // black on hover
+  };
+
   return (
     <motion.div
       style={{ width, height }}
@@ -41,6 +47,7 @@ const ButtonAnimation2 = ({
       onClick={onClick}
       initial="rest"
       whileHover="hover"
+      animate="rest"
     >
       {/* Shadow layer */}
       <motion.div
@@ -92,10 +99,10 @@ const ButtonAnimation2 = ({
           />
         </svg>
 
-        {/* Button content */}
+        {/* Button content (text changes color on hover of button) */}
         <motion.div
           className="relative z-10 font-medium"
-          style={{ color: "#ffff" }}
+          variants={textVariants}
         >
           {children}
         </motion.div>

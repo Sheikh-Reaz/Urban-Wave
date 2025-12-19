@@ -37,8 +37,8 @@ const DashboardLayout = () => {
             </div>
           </nav>
           {/* Page content here */}
-          <div className="min-h-screen p-6 lg:p-8">
-            <div className=" mx-auto  rounded-2xl p-10 ">
+          <div className="min-h-screen  lg:p-8">
+            <div className=" mx-auto  min-h-screen rounded-2xl  ">
               <Outlet />
             </div>
           </div>

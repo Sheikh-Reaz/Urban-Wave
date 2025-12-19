@@ -5,7 +5,8 @@
   text-decoration: none;
   color: inherit;
   transition: color 0.3s ease;
-  font-family: "Helvetica Compressed", sans-serif; /* fallback in case class missing */
+  font-family: "HelveticaCompressed", sans-serif; 
+  font-size: 20px;
 }
 
 /* Gap between navlinks */
@@ -34,5 +35,6 @@
 .navlink.active::after {
   width: 100%;
 }
+
 
 

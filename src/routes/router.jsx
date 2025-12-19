@@ -18,11 +18,17 @@ import ManagerRoutes from "./ManagerRoutes";
 import AddProduct from "../pages/Dashboard/Manager/AddProduct/AddProduct";
 import ManageProduct from "../pages/Dashboard/Manager/ManageProduct/ManageProduct";
 import PendingOrders from "../pages/Dashboard/Manager/PendingOrders/PendingOrders";
-import ApproveOrders from "../pages/Dashboard/Manager/ApproveOrders/ApproveOrders";
+import ApprovedOrders from "../pages/Dashboard/Manager/ApprovedOrders/ApprovedOrders";
 import AdminRoutes from "./AdminRoutes";
+import SharedRoutes from "./SharedRoutes";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders/AllOrders";
 import UpdateProduct from "../pages/Dashboard/Manager/UpdateProduct/UpdateProduct";
+import AdminAllProducts from "../pages/Dashboard/Admin/AdminAllProducts/AdminAllProducts";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
+import Order from "../pages/Order/Order";
+import OrderDetails from "../pages/Dashboard/Manager/OrderDetails/OrderDetails";
+import ViewDetails from "../pages/Dashboard/Admin/AllOrders/ViewDetails";
 
 export const router = createBrowserRouter([
   //Main routes
@@ -39,11 +45,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-products",
-        element: <PrivateRoutes><AllProducts/></PrivateRoutes>
+        Component: AllProducts
       },
       {
         path:"contact",
         Component: Contact
+      },
+      {
+        path:"product/:id",
+        element: <PrivateRoutes> <ProductDetails/> </PrivateRoutes>
+      },
+      {
+        path: "order/:id",
+        element: <PrivateRoutes> <Order/> </PrivateRoutes>
       }
 
     ],
@@ -66,7 +80,7 @@ export const router = createBrowserRouter([
   //Dashboard routes
   {
     path: "dashboard",
-    Component: DashboardLayout,
+    element: <PrivateRoutes> <DashboardLayout/> </PrivateRoutes>,
     children: [
       {
         index: true,
@@ -78,8 +92,12 @@ export const router = createBrowserRouter([
        element: <BuyerRoutes> <MyOrders/></BuyerRoutes>
       },
       {
-        path: "track-orders/:id",
-        element: <BuyerRoutes><TrackOrder/></BuyerRoutes>
+        path: "track-orders/:orderId",
+        element: <TrackOrder/>
+      },
+      {
+        path: "track-orders",
+        element: <TrackOrder/>
       },
       {
         path: "profile",
@@ -96,15 +114,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "update-product/:productId",
-        element: <ManagerRoutes> <UpdateProduct/> </ManagerRoutes>
+        element:  <SharedRoutes><UpdateProduct/></SharedRoutes>
       },
       {
         path:"pending-orders",
         element:<ManagerRoutes> <PendingOrders/> </ManagerRoutes>
       },
       {
-        path:"approve-orders",
-        element:<ManagerRoutes> <ApproveOrders/> </ManagerRoutes>
+        path:"approved-orders",
+        element:<ManagerRoutes> <ApprovedOrders/> </ManagerRoutes>
+      },
+      {
+        path:"order/:id",
+        element: <ManagerRoutes> <OrderDetails/> </ManagerRoutes>
       },
       //Admin Routes
       {
@@ -113,7 +135,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-products",
-        element: <AdminRoutes> <AllProducts/> </AdminRoutes>
+        element: <AdminRoutes> <AdminAllProducts/> </AdminRoutes>
+      },
+      {
+        path: "all-orders/:id",
+        element: <AdminRoutes> <ViewDetails/> </AdminRoutes>
       },
       {
         path: "all-orders",
@@ -125,7 +151,3 @@ export const router = createBrowserRouter([
 
 ]);
 
-
-//Manage Users
-// All Products
-// All Orders

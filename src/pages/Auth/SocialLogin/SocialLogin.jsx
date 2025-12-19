@@ -12,7 +12,7 @@ const SocialLogin = ({ axiosInstance }) => {
     try {
       const result = await signInGoogle();
       const user = result.user;
-      console.log("Google User:", user);
+ 
 
       // ✅ Get Firebase token
       const token = await user.getIdToken();
