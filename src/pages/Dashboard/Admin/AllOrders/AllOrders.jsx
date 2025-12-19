@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const AllOrders = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [filterStatus, setFilterStatus] = useState(""); // "" | Pending | Approved | Rejected
-
+useDocumentTitle("All Orders");
   // Fetch all orders once
   const { data: allOrders = [], isLoading } = useQuery({
     queryKey: ["all-orders"],
@@ -41,7 +42,7 @@ const AllOrders = () => {
         return "bg-gray-300 text-black";
     }
   };
-
+ 
   return (
     <div className="p-4 text-color">
       <h1 className="text-3xl font-bold mb-6 title-font">All Orders</h1>

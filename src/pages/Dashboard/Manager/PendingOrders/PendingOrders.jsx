@@ -3,12 +3,13 @@ import { useNavigate } from "react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const PendingOrders = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
+useDocumentTitle("Pending Orders");
   // ✅ FETCH ONLY PENDING ORDERS FOR LOGGED-IN SELLER
   const { data: orders = [], isLoading } = useQuery({
     queryKey: ["pendingOrders"],

@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Loading from "../../components/Loading";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Order = () => {
   const { user } = useAuth();
@@ -222,8 +224,9 @@ const Order = () => {
   /* ==========================
      RENDER FORM
   ========================== */
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!product) return <p className="text-center mt-10">Product not found</p>;
+    useDocumentTitle("Order");
+  if (loading) return <Loading/>;
+  if (!product) return <Loading/>;
 
   return (
     <div className="max-w-7xl mx-auto min-h-screen">

@@ -3,7 +3,7 @@ import { useTheme } from "../../contexts/ThemeContext/ThemeContext";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../../components/Logo";
 import ThemeToggle from "../../components/ThemeToggle";
-import "./Navbar.css"; // Import your CSS file
+import "./Navbar.css";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -19,22 +19,24 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `navlink  text-color ${isActive ? "active" : ""}`
+            `navlink text-color ${isActive ? "active" : ""}`
           }
         >
           Home
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/all-products"
           className={({ isActive }) =>
-            `navlink  text-color ${isActive ? "active" : ""}`
+            `navlink text-color ${isActive ? "active" : ""}`
           }
         >
           All Product
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/about-us"
@@ -45,36 +47,41 @@ const Navbar = () => {
           About Us
         </NavLink>
       </li>
+
       {user && (
-        <>
- 
-          <li>
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                `navlink  text-color ${isActive ? "active" : ""}`
-              }
-            >
-              Dashboard
-            </NavLink>
-          </li>
-        </>
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `navlink text-color ${isActive ? "active" : ""}`
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
       )}
+
       <li>
         <NavLink
           to="/contact"
           className={({ isActive }) =>
-            `navlink  text-color ${isActive ? "active" : ""}`
+            `navlink text-color ${isActive ? "active" : ""}`
           }
         >
-        Contact
+          Contact
         </NavLink>
+      </li>
+
+      {/* THEME TOGGLE — MOBILE ONLY */}
+      <li className="lg:hidden mt-2">
+        <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
       </li>
     </>
   );
 
   return (
-    <div className="navbar   px-10 shadow-sm">
+    <div className="navbar px-10 shadow-sm">
+      {/* LEFT */}
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -93,50 +100,72 @@ const Navbar = () => {
               />
             </svg>
           </div>
+
+          {/* MOBILE DROPDOWN */}
           <ul
-            tabIndex="-1"
-            className="menu menu-sm dropdown-content mobile-dropdown-bg rounded-box z-1 mt-3 w-52 p-2 "
+            tabIndex={-1}
+            className="menu menu-sm dropdown-content mobile-dropdown-bg rounded-box z-1 mt-3 w-52 p-2 -ml-3"
           >
             {links}
           </ul>
         </div>
+
         <span>
           <Logo />
         </span>
       </div>
 
-      <div className="navbar-center   hidden lg:flex">
-        <ul className=" menu-horizontal   px-1 gap-navlink">{links}</ul>
+      {/* CENTER */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu-horizontal px-1 gap-navlink">{links}</ul>
       </div>
 
+      {/* RIGHT */}
       <div className="navbar-end">
-        <div className="mx-3">
+        {/* THEME TOGGLE — DESKTOP ONLY */}
+        <div className="mx-3 hidden lg:block">
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
-{user ? (
-  <button 
-    onClick={handleLogOut} 
-    className="px-3 py-1.5 md:px-4 md:py-2 bg-transparent text-color border-2 border-color rounded-none transition-colors helvetica-compressed text-base md:text-lg tracking-wider antialiased cursor-pointer"
-  >
-    Log Out
-  </button>
-) : (
-    <>
-      <Link 
-        className="px-3 py-1.5 md:px-4 md:py-2 bg-transparent text-color border-2 border-color rounded-none transition-colors helvetica-compressed text-base md:text-lg tracking-wider antialiased inline-block" 
-        to="/login"
-      >
-        Log in
-      </Link>
-      <Link 
-        className="px-3 py-1.5 md:px-4 md:py-2 bg-transparent text-color border-2 border-color rounded-none transition-colors helvetica-compressed text-base md:text-lg tracking-wider mx-1 antialiased inline-block" 
-        to="/register"
-      >
-        Register
-      </Link>
-    </>
-)}
+        {user ? (
+          <button
+            onClick={handleLogOut}
+            className="
+              px-2 py-1 text-sm
+              md:px-4 md:py-2 md:text-lg
+              bg-transparent text-color border-2 border-color rounded-none
+              transition-colors helvetica-compressed tracking-wider antialiased
+            "
+          >
+            Log Out
+          </button>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="
+                px-2 py-1 text-sm
+                md:px-4 md:py-2 md:text-lg
+                bg-transparent text-color border-2 border-color rounded-none
+                transition-colors helvetica-compressed tracking-wider antialiased inline-block
+              "
+            >
+              Log in
+            </Link>
+
+            <Link
+              to="/register"
+              className="
+                px-2 py-1 text-sm
+                md:px-4 md:py-2 md:text-lg
+                bg-transparent text-color border-2 border-color rounded-none
+                transition-colors helvetica-compressed tracking-wider antialiased inline-block mx-1
+              "
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../hooks/useAuth";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const AdminAllProducts = () => {
   const axiosSecure = useAxiosSecure();
@@ -72,7 +73,7 @@ const AdminAllProducts = () => {
       console.error("Failed to update showOnHome:", error);
     }
   };
-
+ useDocumentTitle("All Products");
   return (
     <div>
       <h1>Manage Products</h1>

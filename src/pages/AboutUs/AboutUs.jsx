@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Users, Target, Zap, Award, ArrowRight, Rocket, Lightbulb, Shield, Layers } from 'lucide-react';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 export default function AboutUs() {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -126,9 +128,11 @@ export default function AboutUs() {
     { year: "2024", event: "Expansion Phase", desc: "Onboarded 50+ factories and 500+ active users" },
     { year: "2025", event: "AI Integration", desc: "Added smart analytics and predictive features" },
   ];
-
+  useDocumentTitle("About Us");
   return (
+    
     <div className="w-full outlet-color text-color overflow-hidden transition-colors duration-300">
+
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div

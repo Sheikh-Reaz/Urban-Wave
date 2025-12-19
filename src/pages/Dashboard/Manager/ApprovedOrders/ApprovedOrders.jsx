@@ -3,11 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../../../hooks/useAuth";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const ApprovedOrders = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-
+useDocumentTitle("Approved Orders");
   // Fetch approved orders for logged-in manager
   const { data: orders = [], isLoading, refetch } = useQuery({
     queryKey: ["approvedOrders", user?.email],

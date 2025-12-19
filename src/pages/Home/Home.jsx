@@ -8,12 +8,13 @@ import GridSection from "./GridSection/GridSection";
 import Reviews from "./Reviews/Reviews";
 import Brands from "./Brands/Brands";
 import LatestProducts from "./LatestProducts/LatestProducts";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const reviewsPromise = fetch("/reviews.json").then((res) => res.json());
 
 const Home = () => {
   const { theme } = useTheme();
-
+  useDocumentTitle("Home");
   return (
     <div>
       <Banner />

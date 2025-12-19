@@ -4,12 +4,14 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
+import Loading from "../../../../components/Loading";
 
 const MyOrders = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+useDocumentTitle("My Orders");
   const {
     data: orders = [],
     isLoading,
@@ -40,9 +42,9 @@ const MyOrders = () => {
       }
     });
   };
-
+  useDocumentTitle("My Orders");
   if (isLoading) {
-    return <p className="text-center mt-10">Loading...</p>;
+    return <Loading/>;
   }
 
   return (

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useDocumentTitle from "../../../hooks/useDocumentTitle";
 
 const MyProfile = () => {
   const { user, logOut } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-
+ useDocumentTitle("Profile");
   useEffect(() => {
     if (!user?.email) return;
 
@@ -29,6 +30,7 @@ const MyProfile = () => {
   }
 
   const isSuspended = profile?.status === "suspended";
+  
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">

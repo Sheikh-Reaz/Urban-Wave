@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PiXLogoFill } from "react-icons/pi"; // X logo
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const Contact = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -18,7 +19,7 @@ const Contact = () => {
     });
     reset();
   };
-
+  useDocumentTitle("Contact Us");
   return (
     <div className="min-h-screen flex flex-col bg-white text-black">
       {/* Header */}

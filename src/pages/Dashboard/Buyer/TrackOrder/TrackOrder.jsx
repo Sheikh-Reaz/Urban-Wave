@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import useAxios from "../../../../hooks/useAxios";
 import Loading from "../../../../components/Loading";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const STATUS_FLOW = [
   "Cutting Completed",
@@ -37,12 +38,12 @@ const buildTimeline = (updates = []) => {
     return { status, state: "pending" };
   });
 };
-
+ 
 const TrackOrder = () => {
   const { orderId: urlOrderId } = useParams();
   const navigate = useNavigate();
   const axios = useAxios();
-
+useDocumentTitle("Track Orders");
   const [submittedOrderId, setSubmittedOrderId] = useState(urlOrderId || "");
   const [orderIdInput, setOrderIdInput] = useState(urlOrderId || "");
 
@@ -72,7 +73,7 @@ const TrackOrder = () => {
 
   // Safe access to updates
   const timeline = buildTimeline(data?.updates || []);
-
+ useDocumentTitle("Track Orders");
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="mb-8">

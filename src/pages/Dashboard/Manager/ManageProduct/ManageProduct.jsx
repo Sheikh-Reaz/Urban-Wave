@@ -4,12 +4,13 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const ManageProduct = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+useDocumentTitle("Manage Products");
   const { data: myProducts = [], refetch } = useQuery({
     queryKey: ["myProducts", user?.email],
     enabled: !!user?.email,

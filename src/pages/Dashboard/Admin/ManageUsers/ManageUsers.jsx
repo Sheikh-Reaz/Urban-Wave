@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { FaUserShield } from "react-icons/fa";
 import { FiShieldOff } from "react-icons/fi";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const SUPER_ADMIN_EMAIL = "skreazuddin87@gmail.com";
 
@@ -13,7 +14,7 @@ const ManageUsers = () => {
   const [page, setPage] = useState(1);
   const [roleFilter, setRoleFilter] = useState(""); // buyer/manager/admin
   const limit = 10;
-
+useDocumentTitle("Manage Users");
   const { data, refetch, isLoading } = useQuery({
     queryKey: ["users", searchText, page, roleFilter],
     queryFn: async () => {

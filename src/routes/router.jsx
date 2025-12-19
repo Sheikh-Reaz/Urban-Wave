@@ -29,6 +29,7 @@ import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Order from "../pages/Order/Order";
 import OrderDetails from "../pages/Dashboard/Manager/OrderDetails/OrderDetails";
 import ViewDetails from "../pages/Dashboard/Admin/AllOrders/ViewDetails";
+import ErrorPage from "../pages/404Page/ErrorPage";
 
 export const router = createBrowserRouter([
   //Main routes
@@ -58,7 +59,8 @@ export const router = createBrowserRouter([
       {
         path: "order/:id",
         element: <PrivateRoutes> <Order/> </PrivateRoutes>
-      }
+      },
+
 
     ],
   },
@@ -147,7 +149,14 @@ export const router = createBrowserRouter([
       }
 
     ]
+  },
+  {
+            
+        path: "*",
+        Component: ErrorPage
+      
   }
+
 
 ]);
 

@@ -2,13 +2,14 @@ import { useNavigate, useLocation, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useRole from "../../hooks/useRole";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 
 const ProductDetails = () => {
   const { state } = useLocation();
   const { productId } = useParams();
   const navigate = useNavigate();
   const role = useRole();
-
+  useDocumentTitle("Product Details");
   const [product, setProduct] = useState(state);
   const [loading, setLoading] = useState(!state);
   const [mainImage, setMainImage] = useState(
@@ -47,13 +48,17 @@ const ProductDetails = () => {
   if (loading) return <p>Loading...</p>;
   if (!product) return <p>Product not found.</p>;
 
+  // Check if user is admin or manager
+  const isOrderDisabled =
+    role?.role === "admin" || role?.role === "manager";
+    
+
   return (
     <>
-      <div className="max-w-[1100px] mx-auto mt-10 px-4 flex flex-col md:flex-row">
+      <div className="max-w-[1100px] min-h-screen mx-auto mt-10 px-4 flex flex-col md:flex-row">
 
         {/* ---------------- LEFT IMAGE GALLERY ---------------- */}
         <div className="md:w-1/2 md:pr-10 flex flex-col items-center">
-
           <div className="w-full max-w-[450px] aspect-square mb-4">
             <img
               src={mainImage}
@@ -132,6 +137,12 @@ const ProductDetails = () => {
                 handleOrder();
               }}
               className="btn"
+              disabled={isOrderDisabled}
+              title={
+                isOrderDisabled
+                  ? "Admins and Managers cannot place orders"
+                  : ""
+              }
             >
               Order Now
             </button>

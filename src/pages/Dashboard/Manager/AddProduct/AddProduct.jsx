@@ -7,10 +7,11 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import Loading from "../../../../components/Loading";
 import useRole from "../../../../hooks/useRole";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const AddProduct = () => {
   const role = useRole();
-
+useDocumentTitle("Add Products");
   const {
     register,
     handleSubmit,

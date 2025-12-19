@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import useAxios from "../../../../hooks/useAxios";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 
 
@@ -86,7 +87,7 @@ const ViewDetails = () => {
   });
 
   const timeline = buildTimeline(data?.updates || []);
-
+  useDocumentTitle("Order Details");
   if (!order) {
     return (
       <div className="p-10 text-center">

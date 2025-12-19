@@ -20,28 +20,35 @@ const Login = () => {
   } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
-  const { signInUser} = useAuth();
+  const { signInUser } = useAuth();
   const axiosInstance = useAxios();
-  const [loadingState, setLoadingState] = useState(false); 
+  const [loadingState, setLoadingState] = useState(false);
 
   const handleLogin = async (data) => {
-    setLoadingState(true); // ✅ start login loading
+    setLoadingState(true); // show loader immediately
     try {
       const result = await signInUser(data.email, data.password);
       const user = result.user;
 
-      // ✅ Get Firebase ID token
+      // Get Firebase ID token
       const token = await user.getIdToken();
 
-      // ✅ Send token to backend to set HttpOnly cookie
+      // Send token to backend to set HttpOnly cookie
       await axiosInstance.post("/jwt", { token });
 
-      setLoadingState(false); // ✅ stop loading before navigate
+      // ✅ Optional: show success modal
+      await Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      setLoadingState(false); // stop loader after modal
       navigate(location?.state || "/");
     } catch (error) {
       console.log(error);
 
-      // ✅ Dynamic error message for every wrong credential attempt
       let errorMessage = "Invalid Login Credentials";
       if (error.code === "auth/wrong-password") {
         errorMessage = "Wrong Password";
@@ -63,18 +70,25 @@ const Login = () => {
         },
       });
 
-      Toast.fire({
+      // ✅ Keep loader visible until toast disappears
+      await Toast.fire({
         icon: "error",
         title: errorMessage,
       });
 
-      setLoadingState(false); // ✅ stop loading on error
+      setLoadingState(false); // stop loader after modal closes
     }
   };
 
   return (
-    <div>
-      {loadingState && <Loading />} {/* ✅ show only on local login loading */}
+    <div className="relative">
+      {/* Loading overlay */}
+      {loadingState && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <Loading />
+        </div>
+      )}
+
       <div
         style={{ backgroundImage: `url(${backgroundImage})` }}
         className="bg-cover bg-center py-16 flex items-center justify-center"
@@ -94,9 +108,7 @@ const Login = () => {
               className="input input-field"
               placeholder="Email"
             />
-            {errors.email && (
-              <p className="text-red-500">Email is required</p>
-            )}
+            {errors.email && <p className="text-red-500">Email is required</p>}
 
             <div className="relative">
               <label className="label form-label">Password</label>

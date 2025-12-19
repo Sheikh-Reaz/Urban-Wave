@@ -1,9 +1,10 @@
 import { useLocation, useNavigate } from "react-router";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const OrderDetails = () => {
   const { state: order } = useLocation();
   const navigate = useNavigate();
-
+useDocumentTitle("Order Details");
   if (!order) {
     return (
       <div>

@@ -8,11 +8,12 @@ import Loading from "../../../../components/Loading";
 import ButtonAnimation from "../../../../components/ButtonAnimation";
 import ImageDropBox from "../../../../components/ImageDropBox";
 import useRole from "../../../../hooks/useRole";
+import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 
 const UpdateProduct = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-
+useDocumentTitle("Update Products");
   const axiosSecure = useAxiosSecure();
 
   const [loading, setLoading] = useState(true);

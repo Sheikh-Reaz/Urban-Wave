@@ -41,22 +41,25 @@ const ProductCard = ({ product }) => {
       {/* Product Info */}
       <div className="pt-3 text-left">
         {/* Stock Status */}
-       <div className="border-b-gray-200  border-b" >
-         <p className="text-sm  text-color font-thin  mb-1">
-          {product.availableQuantity > 0 ? "In Stock" : "Out Of Stock"}
-        </p>
-       </div>
+        <div className="border-b-gray-200 border-b">
+          <p className="text-sm text-color font-thin mb-1">
+            {product.availableQuantity > 0 ? "In Stock" : "Out Of Stock"}
+          </p>
+          {/* Available Quantity */}
+          <p className="text-sm text-color font-thin mb-1">
+            Available Quantity: {product.availableQuantity}
+          </p>
+        </div>
 
         {/* Title */}
-        <h3 className=" text-3xl  text-color  uppercase ">
-          {product.title}
-        </h3>
+        <h3 className="text-3xl text-color uppercase">{product.title}</h3>
 
         {/* Category */}
         <p className="text-sm text-color font-light mt-1 capitalize">
           {product.category}
         </p>
-        {/* Category */}
+
+        {/* Description */}
         <p className="text-sm text-color line-clamp-2 mt-1 capitalize">
           {product.description}
         </p>
