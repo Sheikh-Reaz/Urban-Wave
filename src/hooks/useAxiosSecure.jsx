@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
+  // baseURL: "http://localhost:3000",
   baseURL: "https://assignment-11-server-rho-seven.vercel.app",
   withCredentials: true, // required for HttpOnly cookie
 });

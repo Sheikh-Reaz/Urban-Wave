@@ -54,11 +54,11 @@ export const router = createBrowserRouter([
       },
       {
         path:"product/:id",
-        element: <PrivateRoutes> <ProductDetails/> </PrivateRoutes>
+        element:  <ProductDetails/>
       },
       {
         path: "order/:id",
-        element: <PrivateRoutes> <Order/> </PrivateRoutes>
+        element:  <Order/> 
       },
 
 

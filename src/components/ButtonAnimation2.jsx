@@ -9,6 +9,8 @@ const ButtonAnimation2 = ({
   height = 60,
   gapSize = 20,
   children,
+  textColor = "#ffffff",
+  hoverTextColor = "#000000",
 }) => {
   const controls = useAnimation();
 
@@ -36,8 +38,8 @@ const ButtonAnimation2 = ({
 
   // Text color variants
   const textVariants = {
-    rest: { color: "#ffffff" }, // default white
-    hover: { color: "#000000", transition: { duration: 0.3 } }, // black on hover
+    rest: { color: textColor },
+    hover: { color: hoverTextColor, transition: { duration: 0.3 } },
   };
 
   return (

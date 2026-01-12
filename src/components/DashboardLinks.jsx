@@ -1,4 +1,3 @@
-import React from "react";
 import { FaUsersLine } from "react-icons/fa6";
 import { CiShoppingTag } from "react-icons/ci";
 import { MdDashboardCustomize } from "react-icons/md";
@@ -20,17 +19,17 @@ const DashboardLinks = () => {
   if (roleLoading) return <Loading />; // show loading while fetching role/status
 
   return (
-    <div className="menu w-full grow">
-      <ul className="menu w-full grow">
+    <div className="menu w-full grow p-4">
+      <ul className="menu w-full grow space-y-3">
         {/* Dashboard Link */}
         <li>
           <NavLink
                 to={"/dashboard"}
-            className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+            className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
             data-tip="Dashboard"
           >
-            <MdDashboardCustomize size={20} />
-            <span className="is-drawer-close:hidden">Dashboard</span>
+            <MdDashboardCustomize size={28} />
+            <span className="is-drawer-close:hidden text-lg font-medium">Dashboard</span>
           </NavLink>
         </li>
 
@@ -40,31 +39,31 @@ const DashboardLinks = () => {
             <li>
               <NavLink
                 to={"/dashboard/all-orders"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="All Orders"
               >
-                <CiShoppingTag size={20} />
-                <span className="is-drawer-close:hidden">All Orders</span>
+                <CiShoppingTag size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">All Orders</span>
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={"/dashboard/all-products"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="All Products"
               >
-                <GiClothes size={20} />
-                <span className="is-drawer-close:hidden">All Products</span>
+                <GiClothes size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">All Products</span>
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={"/dashboard/manage-users"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="Manage Users"
               >
-                <FaUsersLine size={20} />
-                <span className="is-drawer-close:hidden">Manage  Users</span>
+                <FaUsersLine size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">Manage Users</span>
               </NavLink>
             </li>
           </>
@@ -76,41 +75,41 @@ const DashboardLinks = () => {
             <li>
               <NavLink
                 to={"/dashboard/add-products"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="Add Product"
               >
-                <MdAddBox size={20} />
-                <span className="is-drawer-close:hidden">Add Product</span>
+                <MdAddBox size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">Add Product</span>
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={"/dashboard/approved-orders"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="Approve Orders"
               >
-                <FaClipboardCheck size={20} />
-                <span className="is-drawer-close:hidden">Approved Orders</span>
+                <FaClipboardCheck size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">Approved Orders</span>
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={"/dashboard/manage-products"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="Manage Products"
               >
-                <MdInventory2 size={20} />
-                <span className="is-drawer-close:hidden">Manage Products</span>
+                <MdInventory2 size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">Manage Products</span>
               </NavLink>
             </li>
             <li>
               <NavLink
                 to={"/dashboard/pending-orders"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="Pending Orders"
               >
-                <FaClipboardList size={20} />
-                <span className="is-drawer-close:hidden">Pending Orders</span>
+                <FaClipboardList size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">Pending Orders</span>
               </NavLink>
             </li>
           </>
@@ -121,33 +120,33 @@ const DashboardLinks = () => {
           <>
             <li>
               <NavLink to={"/dashboard/my-orders"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="My Orders"
               >
-                <MdOutlineReceiptLong size={20} />
-                <span className="is-drawer-close:hidden">My Orders</span>
+                <MdOutlineReceiptLong size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">My Orders</span>
               </NavLink>
             </li>
             <li>
               <NavLink to={"/dashboard/track-orders"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
                 data-tip="Track Orders"
               >
-                <FiSearch size={20} />
-                <span className="is-drawer-close:hidden">Track Orders</span>
+                <FiSearch size={28} />
+                <span className="is-drawer-close:hidden text-lg font-medium">Track Orders</span>
               </NavLink>
             </li>
           </>
         )}
-            <li>
-              <NavLink to={"/dashboard/profile"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Track Orders"
-              >
-                <CircleUser size={20} />
-                <span className="is-drawer-close:hidden">My Profile</span>
-              </NavLink>
-            </li>
+        <li>
+          <NavLink to={"/dashboard/profile"}
+            className="is-drawer-close:tooltip is-drawer-close:tooltip-right text-base py-3 px-4"
+            data-tip="My Profile"
+          >
+            <CircleUser size={28} />
+            <span className="is-drawer-close:hidden text-lg font-medium">My Profile</span>
+          </NavLink>
+        </li>
     
       </ul>
     </div>

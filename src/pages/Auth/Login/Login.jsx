@@ -17,12 +17,35 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
   const { signInUser } = useAuth();
   const axiosInstance = useAxios();
   const [loadingState, setLoadingState] = useState(false);
+
+  // Login credentials
+  const credentials = {
+    admin: {
+      email: "adminboss@gmail.com",
+      password: "Admin@boss1"
+    },
+    manager: {
+      email: "managervai@gmail.com", 
+      password: "Manager@vai1"
+    },
+    buyer: {
+      email: "buyervai@gmail.com",
+      password: "Buyer@vai1"
+    }
+  };
+
+  // Auto-fill functions
+  const fillCredentials = (role) => {
+    setValue("email", credentials[role].email);
+    setValue("password", credentials[role].password);
+  };
 
   const handleLogin = async (data) => {
     setLoadingState(true); // show loader immediately
@@ -101,6 +124,34 @@ const Login = () => {
       <div className="max-w-md mx-auto my-12 border border-gray-300 ">
         <form className="card-body" onSubmit={handleSubmit(handleLogin)}>
           <fieldset className="fieldset">
+            {/* Auto-fill buttons */}
+            <div className="mb-6">
+              <p className="text-sm font-medium mb-3 text-gray-600">Quick Login:</p>
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => fillCredentials('admin')}
+                  className="px-3 py-1 border border-black text-black text-sm hover:bg-gray-100 transition-colors"
+                >
+                  Admin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => fillCredentials('manager')}
+                  className="px-3 py-1 border border-black text-black text-sm hover:bg-gray-100 transition-colors"
+                >
+                  Manager
+                </button>
+                <button
+                  type="button"
+                  onClick={() => fillCredentials('buyer')}
+                  className="px-3 py-1 border border-black text-black text-sm hover:bg-gray-100 transition-colors"
+                >
+                  Buyer
+                </button>
+              </div>
+            </div>
+
             <label className="label form-label">Email</label>
             <input
               type="email"

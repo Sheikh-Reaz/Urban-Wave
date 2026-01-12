@@ -1,10 +1,22 @@
-import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router";
 
 const GridSection = () => {
+  const navigate = useNavigate();
+
   const hoverAnim = {
     rest: { scale: 1 },
     hover: { scale: 1.12, transition: { duration: 0.45 } },
+  };
+
+  const buttonVariants = {
+    rest: { scale: 1, x: 0 },
+    hover: { scale: 1.05, x: 4, transition: { duration: 0.3 } },
+    tap: { scale: 0.95 },
+  };
+
+  const handleShopNow = () => {
+    navigate("/all-products");
   };
 
   return (
@@ -28,7 +40,22 @@ const GridSection = () => {
           <h2 className="text-3xl font-semibold leading-tight">
             Flat <br /> 40% Off <br /> Everything
           </h2>
-          <button className="btn btn-outline mt-4">Shop Now</button>
+          <motion.button 
+            onClick={handleShopNow}
+            variants={buttonVariants}
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+            className="mt-4 px-6 py-2 bg-black text-white font-semibold uppercase tracking-wide text-xs transition-all duration-200 flex items-center gap-2"
+          >
+            Shop Now
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.button>
         </div>
       </motion.div>
 
@@ -50,6 +77,22 @@ const GridSection = () => {
           <h2 className="text-2xl font-bold leading-tight">
             Street <br /> Inspiration
           </h2>
+          <motion.button 
+            onClick={handleShopNow}
+            variants={buttonVariants}
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+            className="mt-4 px-6 py-2 bg-black text-white font-semibold uppercase tracking-wide text-xs transition-all duration-200 flex items-center gap-2"
+          >
+            Explore
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.button>
         </div>
       </motion.div>
 
@@ -69,7 +112,22 @@ const GridSection = () => {
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white text-center z-10">
           <p className="uppercase tracking-wide text-sm">Weekly Edit</p>
           <h2 className="text-3xl font-extrabold">Smart Style</h2>
-          <button className="btn btn-outline mt-4">Explore Now</button>
+          <motion.button 
+            onClick={handleShopNow}
+            variants={buttonVariants}
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+            className="mt-4 px-6 py-2 bg-white text-black font-semibold uppercase tracking-wide text-xs transition-all duration-200 flex items-center gap-2"
+          >
+            Explore Now
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.button>
         </div>
       </motion.div>
 
@@ -89,7 +147,22 @@ const GridSection = () => {
         <div className="absolute top-10 left-8 text-black space-y-1 z-10">
           <p className="text-sm uppercase tracking-wide">Our Offers</p>
           <h2 className="text-2xl font-bold uppercase">Top Brands</h2>
-          <button className="btn btn-outline mt-4">Shop Now</button>
+          <motion.button 
+            onClick={handleShopNow}
+            variants={buttonVariants}
+            initial="rest"
+            whileHover="hover"
+            whileTap="tap"
+            className="mt-4 px-6 py-2 bg-black text-white font-semibold uppercase tracking-wide text-xs transition-all duration-200 flex items-center gap-2"
+          >
+            Shop Now
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.button>
         </div>
       </motion.div>
 
